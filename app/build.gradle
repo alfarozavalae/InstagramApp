@@ -10,7 +10,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -31,5 +34,10 @@ dependencies {
     implementation 'com.parse:parse-android:1.17.3'
     //implementation 'com.github.parse-community.Parse-SDK-Android:parse:1.20.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    implementation "androidx.appcompat:appcompat:${appCompatVersion}"
+    implementation "com.google.android.material:material:${designSupportVersion}"
+    implementation "androidx.percentlayout:percentlayout:1.0.0"
+    implementation "androidx.vectordrawable:vectordrawable:1.0.0" // VectorDrawableCompat
+    implementation "androidx.vectordrawable:vectordrawable-animated:1.0.0" // AnimatedVectorDrawableCompat
     // for logging API calls to LogCat
 }
