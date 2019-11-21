@@ -60,8 +60,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
         }
         public void bind(Post post) {
-
-            // TODO: bind the view elements to the post
             tvHandle.setText(post.getUser().getUsername());
             ParseFile image = post.getImage();
             if (image != null) {
