@@ -24,11 +24,11 @@ import java.util.List;
 
 public class PostsFragment extends Fragment {
 
-    private final String TAG = "PostsFragment";
+    protected final String TAG = "PostsFragment";
 
     private RecyclerView rvPosts;
-    private PostsAdapter adapter;
-    private List<Post> mPosts;
+    protected PostsAdapter adapter;
+    protected List<Post> mPosts;
 
     // OnCreateView to inflate the view
     @Nullable
@@ -52,10 +52,11 @@ public class PostsFragment extends Fragment {
         queryPosts();
     }
 
-
-    private void queryPosts() {
+    protected void queryPosts() {
         ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
         postQuery.include(Post.KEY_USER);
+        postQuery.setLimit(20);
+        postQuery.addDescendingOrder(Post.KEY_CREATED_AT);
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
