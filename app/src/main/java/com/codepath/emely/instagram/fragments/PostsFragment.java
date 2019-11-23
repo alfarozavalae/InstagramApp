@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.codepath.emely.instagram.Post;
 import com.codepath.emely.instagram.PostsAdapter;
@@ -29,6 +30,7 @@ public class PostsFragment extends Fragment {
     private RecyclerView rvPosts;
     protected PostsAdapter adapter;
     protected List<Post> mPosts;
+    private SwipeRefreshLayout swipeContainer;
 
     // OnCreateView to inflate the view
     @Nullable
@@ -39,6 +41,17 @@ public class PostsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryPosts();
+            }
+        });
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         rvPosts = view.findViewById((R.id.rvPosts));
         // create the data source
         mPosts = new ArrayList<>();
@@ -65,9 +78,9 @@ public class PostsFragment extends Fragment {
                     e.printStackTrace();
                     return;
                 }
-                mPosts.addAll(posts);
-                adapter.notifyDataSetChanged();
-
+                adapter.clear();
+                adapter.addAll(posts);
+                swipeContainer.setRefreshing(false) ;
 
                 for (int i = 0; i < posts.size(); i++) {
                     Post post = posts.get(i);
